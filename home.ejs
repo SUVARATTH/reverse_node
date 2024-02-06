@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend Form</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
+</head>
+
+<body>
+
+    <form id="myForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+        <br>
+        <label for="age">Age:</label>
+        <input type="text" id="age" name="age">
+        <br>
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city">
+        <br>
+        <button type="button" onclick="submitForm()">Submit</button>
+    </form>
+
+    <script>
+        function encryptData(data, secretKey) {
+            try {
+                const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(data), secretKey).toString();
+                return encryptedData;
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        function submitForm() {
+            // Get form data
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            const city = document.getElementById('city').value;
+
+            // Create a JSON object with the form data
+            const formData = {
+                name: name,
+                age: age,
+                city: city
+            };
+
+            // Encrypt the data
+            const secretKey = '12345'; // Replace with your secret key
+            const encryptedFormData = encryptData(formData, secretKey);
+
+            // Log the encrypted data for debugging (optional)
+            console.log('Encrypted Data:', encryptedFormData);
+
+            // Send the encrypted data to the server
+            fetch('http://localhost:3000/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        encryptedFormData
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => console.log('Response from server:', data))
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+
+</body>
+
+</html>

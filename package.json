@@ -1,0 +1,25 @@
+{
+    "name": "reverse",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node index.js",
+        "dev": "nodemon index.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "crypto": "^1.0.1",
+        "crypto-js": "^4.2.0",
+        "ejs": "^3.1.9",
+        "express": "^4.18.2",
+        "node": "^21.2.0",
+        "salt": "^0.5.5"
+    },
+    "devDependencies": {
+        "nodemon": "^3.0.3"
+    }
+}
